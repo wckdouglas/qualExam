@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 
-require(data.table)
-suppressMessages(require(DESeq2))
-require(BiocParallel)
+library(data.table)
+suppressMessages(library(DESeq2))
+library(BiocParallel)
 register(MulticoreParam(12))
 
 #setwd('~/qualexam')
@@ -41,11 +41,11 @@ annotate <- function(name){
 
 #======================================
 
-require(data.table)
-require(dplyr)
-require(reshape2)
-require(ggplot2)
-require(tidyr)
+library(data.table)
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+library(tidyr)
 setwd('~/qualexam')
 #genes <- c('Hif1a')
 genes <- c('Met','Snai2','Bcl2','Vegfa','Mmp14','Ldha',
