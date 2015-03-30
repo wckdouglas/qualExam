@@ -5,19 +5,19 @@ suppressMessages(require(DESeq2))
 require(BiocParallel)
 register(MulticoreParam(12))
 
-setwd('~/qualexam')
-dat <- fread('mouseCTC.tsv')
-mat <- dat[,7:193,with=F]
-setnames(mat,
-	make.names(colnames(mat),
-		unique=T))
-
+#setwd('~/qualexam')
+#dat <- fread('mouseCTC.tsv')
+#mat <- dat[,7:193,with=F]
+#setnames(mat,
+#	make.names(colnames(mat),
+#		unique=T))
+#
 annotate <- function(name){
 	if (grepl('GMP',name)){
 		return('primary tumor (TuGMP3)')
 	}else if (grepl('MEF',name)){
 		return('mouse embryonic fibroblasts')
-	}else if (grepl('MP',name)){
+	}else if (grepl('^MP',name)){
 		return('circulating tumor cells')
 	}else if (grepl('WBC',name)){
 		return('leukocytes WBCs')
@@ -25,19 +25,19 @@ annotate <- function(name){
 		return('mouse PDAC cell line (NB508)')}
 }
 
-cells <- sapply(colnames(mat),annotate)
+#cells <- sapply(colnames(mat),annotate)
 
-colData <- data.table(names=colnames(mat),
-			cellType=factor(cells))
-dds <- DESeqDataSetFromMatrix(countData=mat,
-			colData = colData,design= ~cellType)
+#colData <- data.table(names=colnames(mat),
+#			cellType=factor(cells))
+#dds <- DESeqDataSetFromMatrix(countData=mat,
+#			colData = colData,design= ~cellType)
 
-dds <- DESeq(dds,
-		betaPrior=FALSE)
+#dds <- DESeq(dds,
+#		betaPrior=FALSE)
 
-dat <- data.table(dat[,1:6,with=F],counts(dds,normalized=T))
-setnames(dat,c(colnames(dat[,1:6,with=F]),colnames(mat)))
-write.table(dat,'mouseCTC_DESeq.tsv',sep='\t',quote=F,row.names=F,col.names=T)
+#dat <- data.table(dat[,1:6,with=F],counts(dds,normalized=T))
+#setnames(dat,c(colnames(dat[,1:6,with=F]),colnames(mat)))
+#write.table(dat,'mouseCTC_DESeq.tsv',sep='\t',quote=F,row.names=F,col.names=T)
 
 #======================================
 
