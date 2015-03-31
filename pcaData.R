@@ -8,7 +8,7 @@ library(tidyr)
 library(grid)
 
 annotate <- function(name){
-	if (grepl('^TuGMP',name)){
+	if (grepl('^Tu',name)){
 		return('primary tumor (TuGMP3)')
 	}else if (grepl('MEF',name)){
 		return('mouse embryonic fibroblasts')
@@ -28,7 +28,7 @@ dat <- fread('mouseCTC_DESeq.tsv') %>%
 		filter(symbol %in% genes) %>%
 		select(4,5,7:193) %>%
 		gather(sample,counts,-symbol,-name) %>%
-		filter(grep('^TuGMP|^MP',sample)) %>%
+		filter(grep('^Tu|^MP',sample)) %>%
 		select(-name) %>%
 		spread(symbol,counts) %>%
 		gather(genes,counts,-sample) %>%
